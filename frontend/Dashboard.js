@@ -248,10 +248,61 @@ export default function Dashboard({ token, logout }) {
           </div>
         </>
       )}
+  {/* ===================== USER PANEL ===================== */}
+{user.role !== "admin" && (
+  <>
+    {/* USER HEADER */}
+    <div className="card">
+      <h3>My Tasks</h3>
+    </div>
 
-      
+    {/* SEARCH + FILTER */}
+    <div className="card">
+      <input
+        placeholder="Search my tasks..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
-      
+      <select
+        value={statusFilter}
+        onChange={(e) => setStatusFilter(e.target.value)}
+      >
+        <option>All</option>
+        <option>Pending</option>
+        <option>Completed</option>
+      </select>
+    </div>
+
+    {/* TASK LIST */}
+    <div className="card">
+      {filteredTasks.length === 0 ? (
+        <p>No tasks found</p>
+      ) : (
+        filteredTasks.map((t) => (
+          <div key={t.task_id} className="task-row">
+            <div>
+              <strong>{t.title}</strong>
+              <p style={{ margin: "5px 0" }}>{t.description}</p>
+            </div>
+
+            <span
+              className={t.status === "Pending" ? "pending" : "completed"}
+            >
+              {t.status}
+            </span>
+
+            {t.status !== "Completed" && (
+              <button onClick={() => markComplete(t.task_id)}>
+                Mark Complete
+              </button>
+            )}
+          </div>
+        ))
+      )}
+    </div>
+  </>
+)}
 
     </div>
   );
