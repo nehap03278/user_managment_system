@@ -197,6 +197,25 @@ export default function Dashboard({ token, logout }) {
             <button onClick={handleCreate}>Assign Task</button>
           </div>
 
+        {/* ===================== SEARCH ===================== */}
+      <div className="card">
+        <input
+          placeholder="Search tasks..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <option>All</option>
+          <option>Pending</option>
+          <option>Completed</option>
+        </select>
+      </div>
+
+
           {/* ASSIGNED TASKS */}
           <div className="card">
             <h3>Tasks Assigned by You</h3>
@@ -230,57 +249,9 @@ export default function Dashboard({ token, logout }) {
         </>
       )}
 
-      {/* ===================== SEARCH ===================== */}
-      <div className="card">
-        <input
-          placeholder="Search tasks..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      
 
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-        >
-          <option>All</option>
-          <option>Pending</option>
-          <option>Completed</option>
-        </select>
-      </div>
-
-      {/* ===================== USER TASKS ===================== */}
-      <div className="card">
-        <h3>My Tasks</h3>
-
-        {filteredTasks.length === 0 ? (
-          <p>No tasks found</p>
-        ) : (
-          filteredTasks.map((t) => (
-            <div className="task-row" key={t.id}>
-              <div>
-                <strong>{t.title}</strong>
-                <p>{t.description}</p>
-              </div>
-
-              <div>
-                <span
-                  className={
-                    t.status === "Pending" ? "pending" : "completed"
-                  }
-                >
-                  {t.status}
-                </span>
-
-                {t.status === "Pending" && (
-                  <button onClick={() => markComplete(t.id)}>
-                    Complete
-                  </button>
-                )}
-              </div>
-            </div>
-          ))
-        )}
-      </div>
+      
 
     </div>
   );
